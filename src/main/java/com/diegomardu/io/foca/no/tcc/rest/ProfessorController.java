@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/professores")
 public class ProfessorController {
@@ -18,6 +20,11 @@ public class ProfessorController {
     @ResponseStatus(HttpStatus.CREATED)
     public Professor salvar(@RequestBody Professor professor){
         return professorRepository.save(professor);
+    }
+
+    @GetMapping
+    public List<Professor> listarTodos(){
+        return professorRepository.findAll();
     }
 
     @GetMapping("{id}")

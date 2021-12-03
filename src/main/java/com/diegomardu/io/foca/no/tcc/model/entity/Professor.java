@@ -2,22 +2,28 @@ package com.diegomardu.io.foca.no.tcc.model.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Entity
 @Data
 public class Professor {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, length = 150)
     private String nome;
 
+
     private String matricula;
+
+    @Column(nullable = false, length = 150)
+    private String apelido;
+
+    @Email(message = "Email invalido")
+    @Column(unique = false, nullable = false)
+    private String email;
 
 }
