@@ -8,3 +8,12 @@
   <li>Spring Boot</li>
   <li>H2</li>
 </ul>
+
+<h2>
+   <g-emoji class="g-emoji" alias="wave" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f44b.png">👋</g-emoji>
+   Social
+</h2>
+<ul>
+   <li><a href="https://www.linkedin.com/in/diego-martins-duarte-354a01114/">Linkedin</a></li>
+</ul>
+
