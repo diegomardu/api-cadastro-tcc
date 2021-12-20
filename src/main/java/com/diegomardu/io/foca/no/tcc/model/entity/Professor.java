@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.List;
 
 @Entity
 @Data
@@ -15,7 +16,6 @@ public class Professor {
 
     @Column(nullable = false, length = 150)
     private String nome;
-
 
     private String matricula;
 

@@ -12,7 +12,6 @@ public class TrabalhoConclusaoCurso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String orientador;
     private String cargaHoraria;
     private String discente;
     private String curso;
@@ -23,6 +22,10 @@ public class TrabalhoConclusaoCurso {
 
     @Enumerated(EnumType.STRING)
     private TipoCursoOrientacao tipoCursoOrientacao;
+
+    @ManyToOne
+    @JoinColumn(name = "id_professor")
+    private Professor professor;
 
 
 }
