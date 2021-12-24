@@ -18,9 +18,6 @@ public class CadastroTccDto {
     private String cargaHoraria;
 
     @NotEmpty
-    private String discente;
-
-    @NotEmpty
     private String curso;
 
     @NotEmpty
@@ -36,4 +33,7 @@ public class CadastroTccDto {
 
     @NotNull
     private Integer idProfessor;
+
+    @NotNull
+    private Integer idAluno;
 }

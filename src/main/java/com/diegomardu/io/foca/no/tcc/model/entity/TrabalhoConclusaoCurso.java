@@ -13,7 +13,6 @@ public class TrabalhoConclusaoCurso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String cargaHoraria;
-    private String discente;
     private String curso;
     private String periodoLetivo;
 
@@ -25,7 +24,11 @@ public class TrabalhoConclusaoCurso {
 
     @ManyToOne
     @JoinColumn(name = "id_professor")
-    private Professor professor;
+    private Professor orientador;
+
+    @OneToOne
+    @JoinColumn(name = "id_aluno")
+    private Aluno discente;
 
 
 }
