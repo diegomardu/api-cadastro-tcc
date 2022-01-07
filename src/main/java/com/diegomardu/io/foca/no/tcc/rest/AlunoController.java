@@ -7,10 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/alunos")
+@CrossOrigin("http://localhost:4200")
 public class AlunoController {
 
     @Autowired
@@ -23,7 +25,7 @@ public class AlunoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    private Aluno salvar(@RequestBody Aluno aluno){
+    private Aluno salvar(@RequestBody @Valid Aluno aluno){
         return alunoRepository.save(aluno);
     }
 
