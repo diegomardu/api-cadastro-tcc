@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/cadastro-tcc")
 @NoArgsConstructor
@@ -49,5 +51,12 @@ public class TccController {
         tcc.setDiscente(aluno);
 
         return repository.save(tcc);
+    }
+
+    @GetMapping
+    public List<TrabalhoConclusaoCurso> pesquisa(
+            @RequestParam(value = "nome", required = false, defaultValue = "") String nome
+    ){
+        return repository.findProfessorByNome("%" + nome + "%");
     }
 }

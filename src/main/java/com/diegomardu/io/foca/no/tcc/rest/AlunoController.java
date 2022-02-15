@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -14,6 +13,7 @@ import java.util.List;
 @RequestMapping("/api/alunos")
 @CrossOrigin("http://localhost:4200")
 public class AlunoController {
+
 
     @Autowired
     private AlunoRepository alunoRepository;

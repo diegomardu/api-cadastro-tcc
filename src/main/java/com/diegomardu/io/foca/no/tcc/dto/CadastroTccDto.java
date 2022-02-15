@@ -1,7 +1,5 @@
 package com.diegomardu.io.foca.no.tcc.dto;
 
-import com.diegomardu.io.foca.no.tcc.model.entity.Status;
-import com.diegomardu.io.foca.no.tcc.model.entity.TipoCursoOrientacao;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,12 +22,10 @@ public class CadastroTccDto {
     private String periodoLetivo;
 
     @NotEmpty
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private String status;
 
     @NotEmpty
-    @Enumerated(EnumType.STRING)
-    private TipoCursoOrientacao tipoCurso;
+    private String tipoCurso;
 
     @NotNull
     private Integer idProfessor;

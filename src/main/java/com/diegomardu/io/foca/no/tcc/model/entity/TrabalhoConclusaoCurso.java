@@ -16,11 +16,8 @@ public class TrabalhoConclusaoCurso {
     private String curso;
     private String periodoLetivo;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
-    @Enumerated(EnumType.STRING)
-    private TipoCursoOrientacao tipoCursoOrientacao;
+    private String status;
+    private String tipoCursoOrientacao;
 
     @ManyToOne
     @JoinColumn(name = "id_professor")
