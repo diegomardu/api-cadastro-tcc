@@ -1,5 +1,18 @@
 package com.diegomardu.io.foca.no.tcc.rest;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.diegomardu.io.foca.no.tcc.dto.CadastroTccDto;
 import com.diegomardu.io.foca.no.tcc.model.entity.Aluno;
 import com.diegomardu.io.foca.no.tcc.model.entity.Professor;
@@ -7,13 +20,8 @@ import com.diegomardu.io.foca.no.tcc.model.entity.TrabalhoConclusaoCurso;
 import com.diegomardu.io.foca.no.tcc.model.repository.AlunoRepository;
 import com.diegomardu.io.foca.no.tcc.model.repository.ProfessorRepository;
 import com.diegomardu.io.foca.no.tcc.model.repository.TccRepository;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
+import lombok.NoArgsConstructor;
 
 @RestController
 @RequestMapping("/api/cadastro-tcc")
@@ -51,6 +59,11 @@ public class TccController {
         tcc.setDiscente(aluno);
 
         return repository.save(tcc);
+    }
+    
+    @GetMapping("/lista")
+    public List<TrabalhoConclusaoCurso> listarTodos(){
+    	return repository.findAll();
     }
 
     @GetMapping
