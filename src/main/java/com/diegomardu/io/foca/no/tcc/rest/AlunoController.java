@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/alunos")
 public class AlunoController {
+
 
     @Autowired
     private AlunoRepository alunoRepository;
@@ -23,7 +24,7 @@ public class AlunoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    private Aluno salvar(@RequestBody Aluno aluno){
+    private Aluno salvar(@RequestBody @Valid Aluno aluno){
         return alunoRepository.save(aluno);
     }
 
