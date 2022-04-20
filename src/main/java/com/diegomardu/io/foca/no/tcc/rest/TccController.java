@@ -45,7 +45,7 @@ public class TccController {
 
         TrabalhoConclusaoCurso tcc = new TrabalhoConclusaoCurso();
         tcc.setCargaHoraria(dto.getCargaHoraria());
-        tcc.setCurso(dto.getCurso());
+        tcc.setCurso(aluno.getCurso());
         tcc.setPeriodoLetivo(dto.getPeriodoLetivo());
         tcc.setStatus(dto.getStatus());
         tcc.setTipoCursoOrientacao(dto.getTipoCurso());
