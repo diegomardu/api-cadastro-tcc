@@ -51,6 +51,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .secret("@orientaIfpb*")
                 .scopes("read","write")
                 .authorizedGrantTypes("password")
-                .accessTokenValiditySeconds(60);
+                .accessTokenValiditySeconds(1800);
     }
 }
