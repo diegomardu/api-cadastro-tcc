@@ -16,6 +16,9 @@ public class TrabalhoConclusaoCurso {
     private String curso;
     private String periodoLetivo;
 
+    private String nomeAluno;
+    private String nomeProfessor;
+
     private String status;
     private String tipoCursoOrientacao;
 

@@ -44,13 +44,14 @@ public class TccController {
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Aluno não encontrado"));
 
         TrabalhoConclusaoCurso tcc = new TrabalhoConclusaoCurso();
-        tcc.setCargaHoraria(dto.getCargaHoraria());
+        tcc.setCargaHoraria("67");
         tcc.setCurso(aluno.getCurso());
         tcc.setPeriodoLetivo(dto.getPeriodoLetivo());
         tcc.setStatus(dto.getStatus());
         tcc.setTipoCursoOrientacao(dto.getTipoCurso());
         tcc.setOrientador(professor);
         tcc.setDiscente(aluno);
+
 
         return repository.save(tcc);
     }
