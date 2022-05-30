@@ -14,3 +14,4 @@ public interface TccRepository extends JpaRepository<TrabalhoConclusaoCurso, Int
     List<TrabalhoConclusaoCurso> findProfessorByNome(@Param("nome") String nome
     );
 }
+

@@ -1,6 +1,7 @@
 package com.diegomardu.io.foca.no.tcc.rest;
 
 import com.diegomardu.io.foca.no.tcc.dto.CadastroAtaDto;
+import com.diegomardu.io.foca.no.tcc.model.entity.Aluno;
 import com.diegomardu.io.foca.no.tcc.model.entity.ConteudoAta;
 import com.diegomardu.io.foca.no.tcc.model.entity.TrabalhoConclusaoCurso;
 import com.diegomardu.io.foca.no.tcc.model.repository.ConteudoAtaRepository;
@@ -13,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -57,6 +59,9 @@ public class ConteudoAtaController {
         return repository.save(conteudoAta);
     }
 
-
+    @GetMapping("{id}")
+    public List<ConteudoAta> buscarConteudoAta(@PathVariable Integer id){
+        return repository.findConteudoAtaByTccId(id);
+    }
 
 }
