@@ -16,14 +16,17 @@ public class TrabalhoConclusaoCurso {
     private String curso;
     private String periodoLetivo;
 
+    private String nomeAluno;
+    private String nomeProfessor;
+
     private String status;
     private String tipoCursoOrientacao;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_professor")
     private Professor orientador;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_aluno")
     private Aluno discente;
 

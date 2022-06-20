@@ -4,13 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.diegomardu.io.foca.no.tcc.dto.CadastroTccDto;
@@ -50,13 +44,14 @@ public class TccController {
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Aluno não encontrado"));
 
         TrabalhoConclusaoCurso tcc = new TrabalhoConclusaoCurso();
-        tcc.setCargaHoraria(dto.getCargaHoraria());
-        tcc.setCurso(dto.getCurso());
+        tcc.setCargaHoraria("67");
+        tcc.setCurso(aluno.getCurso());
         tcc.setPeriodoLetivo(dto.getPeriodoLetivo());
         tcc.setStatus(dto.getStatus());
         tcc.setTipoCursoOrientacao(dto.getTipoCurso());
         tcc.setOrientador(professor);
         tcc.setDiscente(aluno);
+
 
         return repository.save(tcc);
     }
@@ -71,5 +66,24 @@ public class TccController {
             @RequestParam(value = "nome", required = false, defaultValue = "") String nome
     ){
         return repository.findProfessorByNome("%" + nome + "%");
+    }
+
+    @GetMapping("{id}")
+    public TrabalhoConclusaoCurso buscarPorId(@PathVariable Integer id){
+        return repository
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Orientação não localizada"));
+    }
+
+    @PutMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void atualizar(@PathVariable Integer id,@RequestBody TrabalhoConclusaoCurso conclusaoCurso){
+        repository
+                .findById(id)
+                .map(trabalhoTcc -> {
+                    conclusaoCurso.setId(trabalhoTcc.getId());
+                    return repository.save(conclusaoCurso);
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Orientação não encontrada"));
     }
 }

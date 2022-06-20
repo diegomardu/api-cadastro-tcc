@@ -30,4 +30,6 @@ public class CadastroTccDto {
 
     @NotNull
     private Integer idAluno;
+
+
 }

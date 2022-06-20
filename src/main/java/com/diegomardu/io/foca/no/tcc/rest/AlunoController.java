@@ -3,6 +3,8 @@ package com.diegomardu.io.foca.no.tcc.rest;
 import com.diegomardu.io.foca.no.tcc.model.entity.Aluno;
 import com.diegomardu.io.foca.no.tcc.model.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
