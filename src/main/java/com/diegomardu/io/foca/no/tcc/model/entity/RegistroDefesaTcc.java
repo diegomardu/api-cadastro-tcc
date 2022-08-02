@@ -21,7 +21,7 @@ public class RegistroDefesaTcc {
     @JoinColumn(name = "id_professor")
     private Professor professor;
 
-    private Date data;
+    private String data;
 
     private String periodo_letivo;
 
