@@ -2,6 +2,8 @@ package com.diegomardu.io.foca.no.tcc.rest;
 
 import com.diegomardu.io.foca.no.tcc.model.entity.Aluno;
 import com.diegomardu.io.foca.no.tcc.model.repository.AlunoRepository;
+import com.diegomardu.io.foca.no.tcc.service.AlunoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,47 +17,33 @@ public class AlunoController {
 
 
     @Autowired
-    private AlunoRepository alunoRepository;
+    private AlunoService alunoService;
 
     @GetMapping
     public List<Aluno> listarTodos(){
-        return alunoRepository.findAll();
+        return alunoService.listarTodos();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     private Aluno salvar(@RequestBody @Valid Aluno aluno){
-        return alunoRepository.save(aluno);
+        return alunoService.salvar(aluno);
     }
 
     @GetMapping("{id}")
     public Aluno buscarPorId(@PathVariable Integer id){
-        return alunoRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Aluno não localizado"));
+        return alunoService.buscarPorId(id);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletar(@PathVariable Integer id){
-        alunoRepository
-                .findById(id)
-                .map( professor -> {
-                    alunoRepository.delete(professor);
-                    return Void.TYPE;
-                })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Aluno não encontrado"));
+        alunoService.deletar(id);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void atualizar(@PathVariable Integer id,@RequestBody Aluno alunoAtualizado){
-        alunoRepository
-                .findById(id)
-                .map(professor -> {
-                    alunoAtualizado.setId(professor.getId());
-                    return alunoRepository.save(alunoAtualizado);
-                })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Aluno não encontrado"));
+        alunoService.atualizar(id, alunoAtualizado);
     }
 }
