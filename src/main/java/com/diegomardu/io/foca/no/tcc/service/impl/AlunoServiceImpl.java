@@ -13,7 +13,7 @@ import com.diegomardu.io.foca.no.tcc.service.AlunoService;
 @Service
 public class AlunoServiceImpl implements AlunoService {
 	
-	private AlunoRepository alunoRepository;
+	private final AlunoRepository alunoRepository;
 	
 	public AlunoServiceImpl(AlunoRepository alunoRepository) {
 		this.alunoRepository = alunoRepository;

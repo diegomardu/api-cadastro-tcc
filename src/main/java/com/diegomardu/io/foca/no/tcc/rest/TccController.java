@@ -14,76 +14,46 @@ import com.diegomardu.io.foca.no.tcc.model.entity.TrabalhoConclusaoCurso;
 import com.diegomardu.io.foca.no.tcc.model.repository.AlunoRepository;
 import com.diegomardu.io.foca.no.tcc.model.repository.ProfessorRepository;
 import com.diegomardu.io.foca.no.tcc.model.repository.TccRepository;
+import com.diegomardu.io.foca.no.tcc.service.impl.TccServiceImpl;
 
 import lombok.NoArgsConstructor;
 
 @RestController
 @RequestMapping("/api/cadastro-tcc")
-@NoArgsConstructor
 public class TccController {
 
-    @Autowired
-    private TccRepository repository;
-
-    @Autowired
-    private ProfessorRepository professorRepository;
-
-    @Autowired
-    private AlunoRepository alunoRepository;
+    private final TccServiceImpl serviceImpl;
+    
+    public TccController(TccServiceImpl serviceImpl) {
+    	this.serviceImpl = serviceImpl;
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TrabalhoConclusaoCurso salvar(@RequestBody CadastroTccDto dto){
-        Integer idProfessor = dto.getIdProfessor();
-        Integer idAluno = dto.getIdAluno();
-
-        Professor professor = professorRepository.findById(idProfessor)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Professor não encontrado"));
-
-        Aluno aluno = alunoRepository.findById(idAluno)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Aluno não encontrado"));
-
-        TrabalhoConclusaoCurso tcc = new TrabalhoConclusaoCurso();
-        tcc.setCargaHoraria("67");
-        tcc.setCurso(aluno.getCurso());
-        tcc.setPeriodoLetivo(dto.getPeriodoLetivo());
-        tcc.setStatus(dto.getStatus());
-        tcc.setTipoCursoOrientacao(dto.getTipoCurso());
-        tcc.setOrientador(professor);
-        tcc.setDiscente(aluno);
-
-
-        return repository.save(tcc);
+        return serviceImpl.salvar(dto);
     }
     
     @GetMapping("/lista")
     public List<TrabalhoConclusaoCurso> listarTodos(){
-    	return repository.findAll();
+    	return serviceImpl.listarTodos();
     }
 
-    @GetMapping
-    public List<TrabalhoConclusaoCurso> pesquisa(
-            @RequestParam(value = "nome", required = false, defaultValue = "") String nome
-    ){
-        return repository.findProfessorByNome("%" + nome + "%");
-    }
+	/*
+	 * @GetMapping public List<TrabalhoConclusaoCurso> pesquisa(
+	 * 
+	 * @RequestParam(value = "nome", required = false, defaultValue = "") String
+	 * nome ){ return repository.findProfessorByNome("%" + nome + "%"); }
+	 */
 
     @GetMapping("{id}")
     public TrabalhoConclusaoCurso buscarPorId(@PathVariable Integer id){
-        return repository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Orientação não localizada"));
+        return serviceImpl.buscarPorId(id);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void atualizar(@PathVariable Integer id,@RequestBody TrabalhoConclusaoCurso conclusaoCurso){
-        repository
-                .findById(id)
-                .map(trabalhoTcc -> {
-                    conclusaoCurso.setId(trabalhoTcc.getId());
-                    return repository.save(conclusaoCurso);
-                })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Orientação não encontrada"));
+        serviceImpl.atualizar(id, conclusaoCurso);
     }
 }

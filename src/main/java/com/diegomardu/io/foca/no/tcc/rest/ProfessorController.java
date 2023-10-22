@@ -2,6 +2,8 @@ package com.diegomardu.io.foca.no.tcc.rest;
 
 import com.diegomardu.io.foca.no.tcc.model.entity.Professor;
 import com.diegomardu.io.foca.no.tcc.model.repository.ProfessorRepository;
+import com.diegomardu.io.foca.no.tcc.service.ProfessorService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,49 +19,37 @@ import java.util.List;
 @RequestMapping("/api/professores")
 public class ProfessorController {
 
-    @Autowired
-    private ProfessorRepository professorRepository;
+    private ProfessorService professorService;
+    
+    public ProfessorController (ProfessorService professorService) {
+		this.professorService = professorService;
+	}
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Professor salvar(@RequestBody @Valid
-                                        Professor professor){
-        return professorRepository.save(professor);
+    public Professor salvar(@RequestBody @Valid Professor professor){
+        return professorService.salvar(professor);
     }
 
     @GetMapping
     public List<Professor> listarTodos(){
-        return professorRepository.findAll();
+        return professorService.listarTodos();
     }
 
     @GetMapping("{id}")
     public Professor buscarPorId(@PathVariable Integer id){
-        return professorRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Professor não localizado"));
+        return professorService.buscarPorId(id);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletar(@PathVariable Integer id){
-        professorRepository
-                .findById(id)
-                .map( professor -> {
-                    professorRepository.delete(professor);
-                    return Void.TYPE;
-                })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Professor não encontrado"));
+        professorService.deletar(id);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void atualizar(@PathVariable Integer id,@RequestBody Professor professorAtualizado){
-        professorRepository
-                .findById(id)
-                .map(professor -> {
-                    professorAtualizado.setId(professor.getId());
-                    return professorRepository.save(professorAtualizado);
-                })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Professor não encontrado"));
+        professorService.atualizar(id, professorAtualizado);
     }
 }

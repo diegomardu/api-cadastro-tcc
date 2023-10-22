@@ -6,6 +6,8 @@ import com.diegomardu.io.foca.no.tcc.model.entity.ConteudoAta;
 import com.diegomardu.io.foca.no.tcc.model.entity.TrabalhoConclusaoCurso;
 import com.diegomardu.io.foca.no.tcc.model.repository.ConteudoAtaRepository;
 import com.diegomardu.io.foca.no.tcc.model.repository.TccRepository;
+import com.diegomardu.io.foca.no.tcc.service.impl.ConteudoAtaServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,46 +24,26 @@ import java.util.List;
 @RequestMapping("/api/cadastro-ata")
 public class ConteudoAtaController {
 
-    @Autowired
-    private ConteudoAtaRepository repository;
+	private final ConteudoAtaServiceImpl ataServiceImpl;
 
-    private final TccRepository tccRepository;
-
-    public ConteudoAtaController(TccRepository tccRepository) {
-        this.tccRepository = tccRepository;
+    public ConteudoAtaController(ConteudoAtaServiceImpl ataServiceImpl) {
+        this.ataServiceImpl = ataServiceImpl;
     }
 
     @GetMapping
     public List<ConteudoAta> listarTodos(){
-        return repository.findAll();
+        return ataServiceImpl.listarTodos();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     private ConteudoAta salvar(@RequestBody CadastroAtaDto dto){
-
-        Integer idTcc = dto.getIdTcc();
-
-        TrabalhoConclusaoCurso trabalhoConclusaoCurso = tccRepository.findById(idTcc)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Orientação não encontrada para o Id {} fornecido " + idTcc));
-
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        String currentDateTime = df.format(new Date());
-        dto.setData(currentDateTime);
-
-        ConteudoAta conteudoAta = new ConteudoAta();
-
-        conteudoAta.setTitulo(dto.getTitulo());
-        conteudoAta.setConteudo(dto.getConteudo());
-        conteudoAta.setData(dto.getData());
-        conteudoAta.setTcc(trabalhoConclusaoCurso);
-
-        return repository.save(conteudoAta);
+    	return ataServiceImpl.salvar(dto);
     }
 
     @GetMapping("{id}")
     public List<ConteudoAta> buscarConteudoAta(@PathVariable Integer id){
-        return repository.findConteudoAtaByTccId(id);
+        return ataServiceImpl.buscarPorId(id);
     }
 
 }
